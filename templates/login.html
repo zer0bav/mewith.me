@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Register</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="m-pattern">
+
+<div class="login-wrapper" style="max-width: 900px; margin: 50px auto; padding: 20px;">
+
+    <!-- Feedback Alanı -->
+    {{if .Error}}
+    <div class="alert alert-error">{{.Error}}</div>
+    {{end}}
+    {{if .Success}}
+    <div class="alert alert-success">{{.Success}}</div>
+    {{end}}
+
+    <div class="auth-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+
+        <!-- LOGIN -->
+        <div class="login-box">
+            <div class="auth-title" style="font-size: 24px; margin-bottom: 20px; color: var(--primary);">Login</div>
+            <form action="/login" method="POST">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Username" required>
+                <label style="margin-top:10px; display:block;">Password</label>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="btn" style="width:100%; margin-top:20px;">Login</button>
+            </form>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="login-box">
+            <div class="auth-title" style="font-size: 24px; margin-bottom: 20px; color: var(--primary);">Register</div>
+            <form action="/register" method="POST">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose username" required>
+                <label style="margin-top:10px; display:block;">Password</label>
+                <input type="password" name="password" placeholder="Create password" required>
+                <div style="margin-top: 15px;">
+                    <input type="checkbox" id="ageCheck" required style="width: auto;">
+                    <label for="ageCheck" style="display: inline;">I confirm I am over 18.</label>
+                </div>
+                <button class="btn" style="width:100%; margin-top:20px;">Register</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

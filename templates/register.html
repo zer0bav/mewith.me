@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <title>Kayıt Ol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white h-screen flex items-center justify-center">
+    <div class="w-full max-w-md p-8 bg-gray-800 rounded-lg shadow-lg border border-gray-700">
+        <h2 class="text-2xl font-bold mb-6 text-center">Kayıt Ol</h2>
+        {{if .Error}}
+        <div class="bg-red-500/20 text-red-200 p-3 rounded mb-4 text-center text-sm border border-red-500/50">{{.Error}}</div>
+        {{end}}
+        <form action="/register" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-gray-400 mb-1">Kullanıcı Adı</label>
+                <input type="text" name="username" class="w-full bg-gray-700 rounded p-2 outline-none focus:ring-1 focus:ring-green-500" required>
+            </div>
+            <div>
+                <label class="block text-gray-400 mb-1">Şifre</label>
+                <input type="password" name="password" class="w-full bg-gray-700 rounded p-2 outline-none focus:ring-1 focus:ring-green-500" required>
+            </div>
+            <button class="w-full bg-green-600 hover:bg-green-500 py-2 rounded font-bold transition">Kayıt Ol</button>
+        </form>
+        <p class="mt-4 text-center text-sm text-gray-500">Zaten hesabın var mı? <a href="/login" class="text-blue-400">Giriş Yap</a></p>
+        <p class="mt-2 text-center text-xs text-gray-600"><a href="/">Ana Sayfaya Dön</a></p>
+    </div>
+</body>
+</html>

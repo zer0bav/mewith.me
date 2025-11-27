@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>My Messages</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="m-pattern">
+    <header>
+        <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+        <nav class="header-right">
+            <a href="/">Feed</a>
+            {{if .LoggedIn}}
+                <a href="/my-chats">Messages</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{end}}
+        </nav>
+    </header>
+<div class="container">
+    <div class="card">
+        <h2>My Conversations</h2>
+        {{range .Rooms}}
+        <div style="padding:15px; background:#f9f9f9; border:1px solid #eee; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <strong>{{if eq .Creator $.User.Username}}@{{.TargetUser}}{{else}}@{{.Creator}}{{end}}</strong>
+                <br><small>Started: {{.CreatedAt | timeAgo}}</small>
+            </div>
+            <a href="/chat/{{.ID}}" class="btn">Open Chat</a>
+        </div>
+        {{end}}
+    </div>
+</div></body></html>

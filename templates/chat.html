@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Chat</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="m-pattern">
+    <header>
+        <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+        <nav class="header-right">
+            <a href="/">Feed</a>
+            {{if .LoggedIn}}
+                <a href="/my-chats">Messages</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{end}}
+        </nav>
+    </header>
+<div class="container">
+    {{if .AskPassword}}
+    <div class="card" style="text-align:center; max-width:400px; margin:auto;">
+        <h3>Locked Room 🔒</h3>
+        {{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+        <form action="/chat/{{.RoomID}}" method="POST">
+            <input type="text" name="password" placeholder="Room Password" required>
+            <button class="btn" style="width:100%; margin-top:10px;">Enter</button>
+        </form>
+    </div>
+    {{else}}
+    <div class="card">
+        <div style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:5px;">
+            <h2>Private Chat</h2>
+            <small>Password: {{.CurrentPassword}}</small>
+        </div>
+        <div class="chat-container" id="chatBox">
+            {{range .Room.Messages}}
+            <div class="chat-bubble {{if eq .Author $.User.Username}}bubble-right{{else}}bubble-left{{end}}">
+                <small>{{.Author}}</small><br>{{.Content}}
+            </div>
+            {{end}}
+        </div>
+        <form action="/chat/message" method="POST" style="display:flex; gap:10px; margin-top:10px;">
+            <input type="hidden" name="room_id" value="{{.Room.ID}}">
+            <input type="hidden" name="password" value="{{.CurrentPassword}}">
+            <input type="text" name="content" placeholder="Type a message..." required autocomplete="off">
+            <button class="btn">Send</button>
+        </form>
+    </div>
+    {{end}}
+</div>
+<script>var c=document.getElementById('chatBox'); if(c)c.scrollTop=c.scrollHeight;</script>
+</body></html>

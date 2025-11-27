@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>{{.Title}}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="m-pattern">
+<header>
+    <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+    <nav class="header-right">
+        <a href="/">Feed</a>
+        {{if .LoggedIn}} <a href="/my-chats">Messages</a> <a href="/profile">Profile</a> <a href="/logout">Logout</a>
+        {{else}} <a href="/login">Login</a> {{end}}
+    </nav>
+</header>
+<div class="container">
+
+    {{if .User.IsAdmin}}
+    <div class="card" style="background: #fff0f0; border: 1px solid #ffcccc; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h3 style="color: #c0392b;">Admin Panel</h3>
+            <p style="font-size: 14px; color: #a00;">Manage topics and content.</p>
+        </div>
+        <a href="/admin" class="btn btn-danger">Go to Admin Panel</a>
+    </div>
+    {{end}}
+
+    <!-- SEARCH BAR -->
+    <div class="card" style="padding: 15px;">
+        <form action="/" method="GET" style="display: flex; gap: 10px;">
+            <input type="text" name="q" placeholder="Search topics..." value="{{.Query}}" style="margin: 0;">
+            <button class="btn">Search</button>
+        </form>
+    </div>
+
+    {{if .LoggedIn}}
+    <div class="card">
+        <h3>Create Topic</h3>
+        <form action="/create" method="POST">
+            <input type="text" name="title" placeholder="Topic Title" required>
+            <textarea name="content" placeholder="What's on your mind?" required></textarea>
+            <button class="btn" style="margin-top:10px;">Share</button>
+        </form>
+    </div>
+    {{end}}
+
+    {{range .Topics}}
+    <div class="card">
+        <div onclick="window.location.href='/topic/{{.ID}}'" style="cursor:pointer;">
+            <div style="color:#888; font-size:13px;">
+                <a href="/u/{{.Author}}">@{{.Author}}</a> · {{.CreatedAt | timeAgo}}
+            </div>
+            <h3 style="margin:5px 0;">{{.Title}}</h3>
+            <p>{{.Content}}</p>
+        </div>
+        <div style="border-top:1px solid #eee; margin-top:10px; padding-top:10px; display:flex; justify-content:space-between;">
+            <form action="/topic/{{.ID}}/like" method="POST"><button class="btn" style="padding:5px 10px; font-size:12px;">❤️ {{.Likes}}</button></form>
+            <small>{{len .Comments}} comments</small>
+        </div>
+    </div>
+    {{end}}
+</div></body></html>

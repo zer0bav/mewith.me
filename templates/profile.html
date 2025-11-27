@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profilim</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="m-pattern">
+
+    <header>
+        <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+        <nav class="header-right">
+            <a href="/">Feed</a>
+            <a href="/my-chats">Messages</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+<div class="container">
+
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div style="width: 100%;">
+                <h2 style="color: var(--primary);">@{{.User.Username}}</h2>
+                
+                <div id="view-mode">
+                    <p style="color: #666; margin-top: 5px; white-space: pre-wrap;">{{if .User.About}}{{.User.About}}{{else}}Hakkınızda bir bilgi yok.{{end}}</p>
+                </div>
+
+                <div id="edit-mode" style="display:none; margin-top: 15px;">
+                    <form action="/profile/update" method="POST">
+                        <textarea name="about" rows="4" placeholder="Kendinizden bahsedin..." style="width: 100%;">{{.User.About}}</textarea>
+                        <div style="margin-top: 10px; display: flex; gap: 10px;">
+                            <button type="submit" class="btn">Kaydet </button>
+                            <!-- İptal butonu -->
+                            <button type="button" onclick="toggleEdit()" class="btn" style="background: #ddd; color: #333;">İptal </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="edit-btn-div">
+                <button onclick="toggleEdit()" class="btn" style="white-space: nowrap;">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom: 15px; color: #555;">My Posts</h3>
+        {{range .UserTopics}}
+        <div style="border-bottom:1px solid #eee; padding:10px 0;">
+            <small style="color:#999;">{{.CreatedAt | timeAgo}}</small>
+            <h4 style="margin-top:5px; font-weight:bold;">{{.Title}}</h4>
+            <p style="margin: 5px 0; color:#444;">{{.Content}}</p>
+            <small style="color:var(--primary);">❤️ {{.Likes}} Likes</small>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+<script>
+    function toggleEdit() {
+        var viewMode = document.getElementById('view-mode');
+        var editMode = document.getElementById('edit-mode');
+        var editBtn = document.getElementById('edit-btn-div');
+
+        if (editMode.style.display === "none") {
+            viewMode.style.display = "none";
+            editMode.style.display = "block";
+            editBtn.style.display = "none";
+        } else {
+            viewMode.style.display = "block";
+            editMode.style.display = "none";
+            editBtn.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>

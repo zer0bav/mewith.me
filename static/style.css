@@ -1,0 +1,190 @@
+/* ----------------------------------------------------------
+   🔥 COLOR PALETTE
+----------------------------------------------------------- */
+:root {
+    --primary: #D8482A;
+    --primary-dark: #c0392b;
+    --secondary: #E8674E;
+
+    --bg-gradient: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    --auth-bg: linear-gradient(135deg, #D8482A 0%, #E8674E 100%);
+
+    --card-bg: #ffffff;
+    --text-dark: #333;
+    --text-light: #666;
+
+    --shadow: rgba(0, 0, 0, 0.12);
+}
+
+/* ----------------------------------------------------------
+   🔥 GLOBAL RESET
+----------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+/* ----------------------------------------------------------
+   BACKGROUND "me" PATTERN
+----------------------------------------------------------- */
+.m-pattern {
+    background-color: #f4f4f4; /* Default açık renk zemin */
+    background-image:
+            radial-gradient(#D8482A22 1px, transparent 1px),
+            radial-gradient(#E8674E15 1px, transparent 1px),
+            radial-gradient(#c0392b20 1px, transparent 1px),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="20" y="40" font-size="40" fill="%23D8482A11">me</text><text x="120" y="150" font-size="70" fill="%23c0392b11">m</text><text x="70" y="100" font-size="25" fill="%23E8674E11">me</text></svg>');
+    background-size: 90px 90px, 150px 150px, 250px 250px, 200px 200px;
+    background-repeat: repeat;
+}
+
+/* ----------------------------------------------------------
+ HEADER
+----------------------------------------------------------- */
+header {
+    width: 100%;
+    padding: 18px 30px;
+    background: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+
+.header-left { display: flex; align-items: center; }
+.header-logo { height: 45px; width: auto; display: block; }
+
+.header-right { display: flex; align-items: center; gap: 25px; }
+.header-right a { color: white; text-decoration: none; font-weight: 500; font-size: 15px; }
+.header-right a:hover { opacity: 0.75; }
+
+/* ----------------------------------------------------------
+   🔥 MAIN CONTAINER
+----------------------------------------------------------- */
+.container { max-width: 900px; margin: 30px auto; padding: 20px; }
+
+/* ----------------------------------------------------------
+   🔥 CARD STYLE
+----------------------------------------------------------- */
+.card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 18px var(--shadow);
+    color: var(--text-dark); /* Yazı rengi siyah */
+}
+
+/* ----------------------------------------------------------
+   🔥 BUTTON
+----------------------------------------------------------- */
+.btn {
+    background: var(--primary);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-danger {
+    background: var(--primary-dark);
+    padding: 8px 12px;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ----------------------------------------------------------
+   🔥 INPUTS (DÜZELTİLDİ: Siyah yazı, Beyaz zemin)
+----------------------------------------------------------- */
+input, textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 6px;
+    font-size: 15px;
+    background-color: #ffffff !important; /* Beyaz zemin */
+    color: #333333 !important; /* Siyah yazı */
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px #D8482A25;
+}
+
+/* ----------------------------------------------------------
+   🔥 LOGIN/REGISTER LAYOUT
+----------------------------------------------------------- */
+.login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.auth-grid { display: grid; gap: 40px; width: 100%; max-width: 900px; }
+@media (min-width: 850px) { .auth-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 849px) { .auth-grid { grid-template-columns: 1fr; } }
+
+.login-box {
+    width: 100%; /* Responsive */
+    padding: 30px;
+    background: rgba(255,255,255,0.9); /* Daha okunaklı olması için opaklığı artırdım */
+    border-radius: 16px;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    color: var(--text-dark);
+}
+
+.auth-title { font-size: 26px; font-weight: 700; text-align: center; color: var(--primary); margin-bottom: 10px; }
+
+/* ----------------------------------------------------------
+   🔥 CHAT STYLE (Baloncuklar)
+----------------------------------------------------------- */
+.chat-container {
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+}
+
+.bubble-left {
+    align-self: flex-start;
+    background-color: #e0e0e0;
+    color: #333;
+    border-bottom-left-radius: 2px;
+}
+
+.bubble-right {
+    align-self: flex-end;
+    background-color: var(--primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.bubble-meta { font-size: 10px; margin-bottom: 2px; opacity: 0.8; display: block;}
+
+/* Feedback Messages */
+.alert { padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; }
+.alert-error { background: #fee; color: #c0392b; border: 1px solid #fcc; }
+.alert-success { background: #efe; color: #27ae60; border: 1px solid #cfc; }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>{{.Title}}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="m-pattern">
+    <header>
+        <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+        <nav class="header-right">
+            <a href="/">Feed</a>
+            {{if .LoggedIn}}
+                <a href="/my-chats">Messages</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{end}}
+        </nav>
+    </header>
+<div class="container">
+    <div class="card">
+        <div style="display:flex; justify-content:space-between;">
+            <div><h2>{{.Topic.Title}}</h2><small><a href="/u/{{.Topic.Author}}">@{{.Topic.Author}}</a> · {{.Topic.CreatedAt | timeAgo}}</small></div>
+            <form action="/topic/{{.Topic.ID}}/like" method="POST"><button class="btn">❤️ {{.Topic.Likes}}</button></form>
+        </div>
+        <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+        <p style="white-space: pre-wrap;">{{.Topic.Content}}</p>
+    </div>
+    <div class="card">
+        <h3>Comments</h3>
+        {{range .Topic.Comments}}
+        <div style="padding:10px; border-bottom:1px solid #eee;">
+            <strong><a href="/u/{{.Author}}">@{{.Author}}</a></strong> <small>{{.CreatedAt | timeAgo}}</small>
+            <p>{{.Content}}</p>
+        </div>
+        {{end}}
+        {{if .LoggedIn}}
+        <form action="/topic/{{.Topic.ID}}/comment" method="POST" style="margin-top:15px;">
+            <textarea name="content" placeholder="Write a comment..." required></textarea>
+            <button class="btn" style="margin-top:5px;">Post Comment</button>
+        </form>
+        {{end}}
+    </div>
+</div></body></html>

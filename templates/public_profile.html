@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>@{{.TargetUser.Username}}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="m-pattern">
+    <header>
+        <div class="header-left"><img src="/static/logo.png" class="header-logo"></div>
+        <nav class="header-right">
+            <a href="/">Feed</a>
+            {{if .LoggedIn}}
+                <a href="/my-chats">Messages</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{end}}
+        </nav>
+    </header>
+<div class="container">
+    <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+            <h2>@{{.TargetUser.Username}}</h2>
+            <p>{{if .TargetUser.About}}{{.TargetUser.About}}{{else}}No info available.{{end}}</p>
+        </div>
+        {{if and .LoggedIn (ne .User.Username .TargetUser.Username)}}
+        <form action="/chat/start" method="POST">
+            <input type="hidden" name="target_user" value="{{.TargetUser.Username}}">
+            <button class="btn">Send Message </button>
+        </form>
+        {{end}}
+    </div>
+    <div class="card">
+        <h3>Posts</h3>
+        {{range .UserTopics}}
+        <div style="border-bottom:1px solid #eee; padding:10px 0;">
+            <small>{{.CreatedAt | timeAgo}}</small>
+            <h4>{{.Title}}</h4>
+            <p>{{.Content}}</p>
+        </div>
+        {{end}}
+    </div>
+</div></body></html>
